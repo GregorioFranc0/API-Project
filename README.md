@@ -1,8 +1,8 @@
-# FoggyRentals
+# MegatonRentals
 
 ## Database Schema Design
 
-[db-schema](./images/schema.jpg)
+[megaton-schema](./images/megaton-schema.jpg)
 `<insert database schema design here>`
 
 ## API Documentation
