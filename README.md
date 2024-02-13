@@ -2,8 +2,8 @@
 
 ## Database Schema Design
 
-[megaton-schema](./images/megaton-schema.jpg)
-`<insert database schema design here>`
+[megaton-schema](./images/megaton-schema.png)
+
 
 ## API Documentation
 
