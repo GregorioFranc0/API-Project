@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    console.log('\n\n\nhello\n\n')
+    // console.log('\n\n\nhello\n\n')
     await User.bulkCreate([
       {
         firstName: 'charles entertainment',
@@ -38,7 +38,7 @@ module.exports = {
       }
     ],
       { validate: true });
-    console.log('\n\n\ngoodbye\n\n')
+    //console.log('\n\n\ngoodbye\n\n')
   },
 
   async down(queryInterface, Sequelize) {
