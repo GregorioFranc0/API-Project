@@ -51,7 +51,11 @@ router.post(
     }
 );
 
+router.get("/", async (req, res) => {
+    const allUsers = await User.findAll();
 
+    return res.json(allUsers);
+});
 
 router.post(
     '/',
