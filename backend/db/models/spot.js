@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true
+      unique: true,
+      primaryKey: true
     },
     ownerId: {
       type: DataTypes.INTEGER,
@@ -54,6 +55,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    avgRating: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+
+    },
+    previewImage: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Spot',
