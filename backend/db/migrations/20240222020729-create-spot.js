@@ -19,7 +19,11 @@ module.exports = {
       },
       ownerId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id"
+        }
       },
       address: {
         type: Sequelize.STRING,
@@ -49,9 +53,15 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false
       },
+      avgRating: {
+        type: Sequelize.FLOAT,
+      },
       price: {
         type: Sequelize.INTEGER,
         allowNull: false
+      },
+      previewImage: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
