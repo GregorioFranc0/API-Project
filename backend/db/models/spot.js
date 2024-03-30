@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
@@ -11,6 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner' })
+      Spot.hasMany(models.Booking, { foreignKey: 'spotId', onDelete: "CASCADE", })
+      Spot.hasMany(models.Review, { foreignKey: 'spotId', onDelete: "CASCADE" })
+      Spot.hasMany(models.Image, {
+        foreignKey: 'imageId', as: "ReviewImages",
+        onDelete: "CASCADE",
+        constraints: false,
+        scope: {
+          imageType: 'Spot'
+        }
+      })
     }
   }
   Spot.init({
@@ -71,6 +82,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Spot',
+    scopes: {
+      currentSpot: {
+        attributes: { exclude: ['avgRating', 'previewImage'] }
+      },
+    }
   });
   return Spot;
 };
