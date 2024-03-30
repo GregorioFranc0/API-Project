@@ -8,6 +8,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+//get all spots
 
 router.get(async (req, res, next) => {
     const spot = await Spot.findAll();
@@ -29,9 +30,12 @@ router.get(async (req, res, next) => {
         "previewImage": spot.previewImage
     };
 
-    await setTokenCookie(res, validSpot);
+
 
     return res.json({
         spot: validSpot
     });
 })
+
+
+module.exports = router;

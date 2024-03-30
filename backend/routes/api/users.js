@@ -59,34 +59,35 @@ router.get("/", async (req, res) => {
     return res.json(allUsers);
 });
 
-router.post(
-    '/',
-    async (req, res) => {
-        const { email, password, username } = req.body;
-        const hashedPassword = bcrypt.hashSync(password);
-        const user = await User.create({ email, username, hashedPassword });
+//zaviar told me to comment this, its his fault
+// router.post(
+//     '/',
+//     async (req, res) => {
+//         const { email, password, username } = req.body;
+//         const hashedPassword = bcrypt.hashSync(password);
+//         const user = await User.create({ email, username, hashedPassword });
 
-        const safeUser = {
-            id: user.id,
-            email: user.email,
-            username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName
-        };
+//         const safeUser = {
+//             id: user.id,
+//             email: user.email,
+//             username: user.username,
+//             firstName: user.firstName,
+//             lastName: user.lastName
+//         };
 
-        await setTokenCookie(res, safeUser);
+//         await setTokenCookie(res, safeUser);
 
-        return res.json({
-            user: safeUser
-        });
-    }
-);
+//         return res.json({
+//             user: safeUser
+//         });
+//     }
+// );
 
 //get all users
 router.get(
     '/',
     async (req, res) => {
-        const users = await User.findAll('allUsers');
+        const users = await User.findAll();
         res.json(users);
     })
 

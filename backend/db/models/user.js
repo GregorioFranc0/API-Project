@@ -4,6 +4,11 @@ const { Model, Validator, Sequelize } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
+
+    validatePassword(password) {
+      return bcrypt.compareSync(password, hashedPassword.toString());
+    };
+
     static associate(models) {
       // define association here
     }
@@ -37,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          len: [3, 256],
+          len: [6, 256],
           isEmail: true
         }
       },

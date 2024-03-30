@@ -13,10 +13,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
+
       ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -34,6 +31,10 @@ module.exports = {
         allowNull: false
       },
       state: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      country: {
         type: Sequelize.STRING,
         allowNull: false
       },
