@@ -37,5 +37,60 @@ router.get(async (req, res, next) => {
     });
 })
 
+// Get all spots owned by the current user
+router.get(
+    '/current',
+    requireAuth,
+    async (req, res) => {
+        const { user } = req;
+        const spots = await Spot.findAll({
+            where: {
+                ownerId: user.id
+            }
+
+        })
+        for await (let spot of spots) {
+            const previewImage = await SpotImage.findOne({
+                where: {
+                    imageId: spot.id,
+                    preview: true,
+                    imageType: "Spot"
+                }
+            });
+            if (previewImage && !spot.previewImage) {
+                spot.previewImage = previewImage.url
+            } else if (!previewImage && !spot.previewImage) {
+                spot.previewImage = "None"
+            } else {
+                spot.previewImage = spot.previewImage
+            }
+
+            const rating = await Review.findAll({
+                where: { spotId: spot.id }
+            })
+
+            let sum = 0;
+
+            if (rating.length) {
+                rating.forEach(rating => {
+                    sum += rating.stars
+                });
+                let avg = sum / rating.length;
+
+                spot.avgRating = avg
+            } else {
+                spot.avgRating = 0
+            }
+        }
+        if (!spots.length) {
+            res.status(404);
+            return res.json({
+                message: "Spot couldn't be found",
+                stateCode: 404
+            })
+        }
+        res.json({ Spots: spots })
+    }
+)
 
 module.exports = router;
