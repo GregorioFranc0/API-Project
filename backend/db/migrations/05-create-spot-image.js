@@ -1,4 +1,5 @@
 'use strict';
+let options = {};
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('spotImages', {
@@ -25,7 +26,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    }, options);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('spotImages');
