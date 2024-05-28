@@ -14,14 +14,14 @@ module.exports = (sequelize, DataTypes) => {
       Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner' })
       Spot.hasMany(models.Booking, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
       Spot.hasMany(models.Review, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
-      Spot.hasMany(models.spotImage, {
-        foreignKey: 'imageId', as: "ReviewImages",
-        onDelete: "CASCADE", hooks: true,
-        constraints: false,
-        scope: {
-          imageType: 'Spot'
-        }
-      })
+      // Spot.hasMany(models.spotImage, {
+      //   foreignKey: 'imageId',
+      //   onDelete: "CASCADE", hooks: true,
+      //   constraints: false,
+      //   scope: {
+      //     imageType: 'Spot'
+      //   }
+      // })
     }
   }
   Spot.init({
@@ -60,14 +60,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    latitude: {
+    lat: {
       type: DataTypes.FLOAT,
       validate: {
         min: -90,
         max: 90
       }
     },
-    longitude: {
+    lng: {
       type: DataTypes.FLOAT,
     },
     price: {
