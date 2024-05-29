@@ -8,7 +8,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
-const validateCreatebooking = [
+const validateCreateBooking = [
     check('endDate')
         .exists()
         .isBefore('startDate')
@@ -20,7 +20,7 @@ const validateCreatebooking = [
     handleValidationErrors
 ]
 
-const validateCreatereview = [
+const validateCreateReview = [
     check('review')
         .exists({ checkFalsy: true })
         .withMessage('Review text is required'),
@@ -30,7 +30,7 @@ const validateCreatereview = [
     handleValidationErrors
 ]
 
-const validateCreatespot = [
+const validateCreateSpot = [
     check('address')
         .exists({ checkFalsy: true })
         .withMessage('Street address is required'),
@@ -201,7 +201,7 @@ router.get(
 // Create a spot
 router.post(
     '/',
-    validateCreatespot,
+    validateCreateSpot,
     async (req, res) => {
         const userId = req.user.id
         const {
@@ -217,7 +217,7 @@ router.post(
             ownerId = userId,
             previewImage
         } = req.body;
-        const spot = await Spot.createspot({
+        const spot = await Spot.createSpot({
             ownerId, address, city, state, country, lat, lng, name, description, price, previewImage
         });
 
@@ -287,10 +287,7 @@ router.post(
                 stateCode: 404
             })
         }
-        const {
-            url,
-            preview,
-        } = req.body;
+        const { url, preview, } = req.body;
         const image = await Image.create({
             url, preview,
             imageId: req.params.spotId,
@@ -334,8 +331,8 @@ router.get(
 
 // Create a review for a spot by spotId
 router.post(
-    '/:spotId/reviews',
-    validateCreatereview,
+    '/:spotId/review',
+    validateCreateReview,
     async (req, res) => {
         const spot = await Spot.findByPk(req.params.spotId);
         if (!spot) {
@@ -373,7 +370,7 @@ router.post(
 
 //Get all bookings by spotId
 router.get(
-    '/:spotId/bookings',
+    '/:spotId/booking',
     async (req, res) => {
 
         const spot = await Spot.findByPk(req.params.spotId)
@@ -411,7 +408,7 @@ router.get(
 
 //Create a bookings by spotId
 router.post(
-    '/:spotId/bookings',
+    '/:spotId/booking',
     async (req, res) => {
         const { startDate, endDate } = req.body;
 
@@ -443,12 +440,6 @@ router.post(
                 }
             }
         })
-        const checkDate = bookings.some(booking =>
-            start.getTime() <= booking.startDate.getTime() && booking.startDate.getTime() <= end.getTime() ||
-            booking.startDate.getTime() <= start.getTime() && end.getTime() <= booking.endDate.getTime() ||
-            start.getTime() <= booking.endDate.getTime() && booking.endDate.getTime() <= end.getTime() ||
-            start.getTime() <= booking.startDate.getTime() && booking.endDate.getTime() <= end.getTime()
-        )
 
         if (!checkDate) {
             const booking = await Booking.create({

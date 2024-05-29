@@ -2,10 +2,10 @@ const router = require('express').Router();
 const sessionRouter = require('./session.js');
 const spotsRouter = require('./spots.js')
 const usersRouter = require('./users.js')
-const bookingRouter = require('./bookings.js');
+// const bookingRouter = require('./bookings.js');
 const reviewsRouter = require('./reviews.js')
-const spotImageRouter = require('./spotImage');
-const reviewImageRouter = require('./reviewImage.js')
+// const spotImageRouter = require('./spotImage');
+// const reviewImageRouter = require('./reviewImage.js')
 const { restoreUser } = require('../../utils/auth.js');
 
 const { requireAuth } = require('../../utils/auth.js');
@@ -24,11 +24,11 @@ router.use('/spots', spotsRouter);
 
 router.use('/reviews', reviewsRouter);
 
-router.use('/bookings', bookingRouter);
+// router.use('/bookings', bookingRouter);
 
-router.use('/spot-images', spotImageRouter);
+// router.use('/spot-images', spotImageRouter);
 
-router.use('/review-images', reviewImageRouter)
+// router.use('/review-images', reviewImageRouter)
 
 router.get(
     '/restore-user',
