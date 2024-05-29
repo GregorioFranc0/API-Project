@@ -59,21 +59,21 @@ module.exports = {
         avgRating: 4,
         previewImage: 'https://static.wikia.nocookie.net/fallout/images/b/b9/Andale.jpg/revision/latest?cb=20120813221138'
       },
-      {
-        id: 4,
-        ownerId: 4,
-        address: '101 DC Avenue',
-        city: 'Washington',
-        state: 'DC',
-        country: 'USA',
-        lat: '100.293443',
-        lng: '-34.349393',
-        name: 'Vault 101',
-        description: 'Where you stay secure',
-        price: 199,
-        avgRating: 5,
-        previewImage: 'https://static.wikia.nocookie.net/fallout/images/a/a1/Vault_101_entrance_ext.jpg/revision/latest?cb=20210605064850'
-      }
+      // {
+      //   id: 4,
+      //   ownerId: 4,
+      //   address: '101 DC Avenue',
+      //   city: 'Washington',
+      //   state: 'DC',
+      //   country: 'USA',
+      //   lat: '100.293443',
+      //   lng: '-34.349393',
+      //   name: 'Vault 101',
+      //   description: 'Where you stay secure',
+      //   price: 199,
+      //   avgRating: 5,
+      //   previewImage: 'https://static.wikia.nocookie.net/fallout/images/a/a1/Vault_101_entrance_ext.jpg/revision/latest?cb=20210605064850'
+      // }
     ])
   },
 
