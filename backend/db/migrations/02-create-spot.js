@@ -1,5 +1,6 @@
 'use strict';
 let options = {};
+options.tableName = "Spots";
 const { sequelize } = require('../models');
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
@@ -19,9 +20,11 @@ module.exports = {
         allowNull: false,
         references: {
           model: "Users",
-          key: "id"
-        }
+          // key: "id"
+        },
+        onDelete: "CASCADE"
       },
+
       address: {
         type: Sequelize.STRING,
         allowNull: false
@@ -46,11 +49,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      latitude: {
+      lat: {
         type: Sequelize.FLOAT,
         allowNull: false
       },
-      longitude: {
+      lng: {
         type: Sequelize.FLOAT,
         allowNull: false
       },
