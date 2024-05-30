@@ -59,5 +59,92 @@ router.get(
     }
 )
 
+// Add an image to a review by reviewId
+router.post(
+    '/:reviewId/images',
+    async (req, res) => {
+        const review = await Review.findByPk(req.params.reviewId);
+        if (!review) {
+            res.status(404).json({
+                message: "Review couldn't be found",
+                statusCode: 404
+            })
+        }
+        const allReviews = await Image.findAll({
+            where: { imageId: req.params.reviewId }
+        });
+        if (allReviews.length >= 10) {
+            res.status(403).json({
+                message: "Maximum number of images for this resource was reached",
+                statusCode: 403
+            })
+        }
+        const { url } = req.body;
+        const image = await Image.create({
+            url,
+            imageId: req.params.reviewId,
+            imageType: 'Review'
+        })
+        const resObject = {
+            id: image.id,
+            url: image.url
+        }
+        return res.status(201).json(resObject)
+    }
+)
+
+//Edit a review
+router.put(
+    '/:reviewId',
+    validateEditReview,
+    async (req, res) => {
+        const { review, stars } = req.body;
+        const reviews = await Review.findByPk(req.params.reviewId
+            , {
+                include: [{
+                    model: User,
+                    attributes: { exclude: ['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt'] }
+
+                }]
+            }
+        );
+        if (!reviews) {
+            res.status(404).json({
+                message: "Review couldn't be found",
+                statusCode: 404
+            })
+        }
+        reviews.review = review;
+        reviews.stars = stars;
+        reviews.userId = req.user.id;
+        reviews.spotId = reviews.spotId;
+        await reviews.save()
+        res.json(reviews)
+    }
+)
+
+// Delete a review
+router.delete(
+    '/:reviewId',
+    requireAuth,
+    async (req, res) => {
+        const review = await Review.findByPk(req.params.reviewId);
+        if (!review) {
+            res.status(404).json({
+                message: "Review couldn't be found",
+                statusCode: 404
+            })
+        }
+        if (req.user.id !== review.userId) {
+            const err = new Error('Forbidden')
+            res.status(403).json({
+                message: err.message,
+                statusCode: 403
+            })
+        }
+        await review.destroy();
+        return res.status(200).json(review)
+    }
+)
 
 module.exports = router;
