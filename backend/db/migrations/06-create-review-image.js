@@ -1,5 +1,6 @@
 'use strict';
 let options = {};
+options.tableName = "Review Images";
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }

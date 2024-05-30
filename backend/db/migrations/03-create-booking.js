@@ -1,6 +1,6 @@
 'use strict';
 let options = {};
-
+options.tableName = "Bookings";
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Bookings', {
