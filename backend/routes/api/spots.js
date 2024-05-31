@@ -103,7 +103,7 @@ router.get(
         })
 
         for await (let spot of spots) {
-            const previewImage = await Image.findOne({
+            const previewImage = await SpotImage.findOne({
                 where: {
                     imageId: spot.id,
                     preview: true,
