@@ -290,7 +290,7 @@ router.post(
         const { url, preview, } = req.body;
         const image = await SpotImage.create({
             url, preview,
-            imageId: req.params.spotId,
+            SpotImage: req.params.spotId,
             imageType: "Spot"
         })
         const resObject = {
@@ -315,7 +315,7 @@ router.get(
                 attributes: { exclude: ['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt'] }
             }, {
                 model: ReviewImage, as: "ReviewImages",
-                attributes: { exclude: ['imageType', 'imageId', 'preview', 'createdAt', 'updatedAt'] }
+                attributes: { exclude: ['preview', 'createdAt', 'updatedAt'] }
             }]
         });
         if (!spotReview.length) {

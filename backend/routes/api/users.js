@@ -79,35 +79,13 @@ router.post(
     }
 );
 
+//get all users
 router.get("/", async (req, res) => {
     const allUsers = await User.findAll();
 
     return res.json(allUsers);
 });
 
-//zaviar told me to comment this, its his fault
-// router.post(
-//     '/',
-//     async (req, res) => {
-//         const { email, password, username } = req.body;
-//         const hashedPassword = bcrypt.hashSync(password);
-//         const user = await User.create({ email, username, hashedPassword });
-
-//         const safeUser = {
-//             id: user.id,
-//             email: user.email,
-//             username: user.username,
-//             firstName: user.firstName,
-//             lastName: user.lastName
-//         };
-
-//         await setTokenCookie(res, safeUser);
-
-//         return res.json({
-//             user: safeUser
-//         });
-//     }
-// );
 
 // Delete a user
 router.delete(
@@ -122,7 +100,7 @@ router.delete(
         return res.status(201).json({ message: 'User successfully deleted' })
     })
 
-//get all users
+//get the current user
 router.get(
     '/:id',
     async (req, res) => {
