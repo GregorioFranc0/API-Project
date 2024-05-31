@@ -60,6 +60,56 @@ router.delete(
     }
 )
 
+//Edit a booking
+router.put(
+    '/:bookingId',
+    async (req, res) => {
+        const booking = await Booking.findByPk(req.params.bookingId);
+        if (!booking) {
+            return res.status(404).json({
+                message: "Booking couldn't be found",
+                statusCode: 404
+            });
+        };
+        const { startDate, endDate } = req.body;
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        if (start >= end) {
+            return res.status(400).json({
+                message: "Validation error",
+                statusCode: 400,
+                error: ["end date cannot be on or before start date"]
+            })
 
+        } else if (start.getTime() <= booking.startDate.getTime() && booking.startDate.getTime() <= end.getTime() ||
+            booking.startDate.getTime() <= start.getTime() && end.getTime() <= booking.endDate.getTime() ||
+            start.getTime() <= booking.endDate.getTime() && booking.endDate.getTime() <= end.getTime() ||
+            start.getTime() <= booking.startDate.getTime() && booking.endDate.getTime() <= end.getTime()) {
+
+            return res.status(403).json({
+                message: 'Sorry, this spot is already booked for the specified dates',
+                statusCode: 403,
+                errors: [
+                    "Start date conflicts with an existing booking",
+                    "End date conflicts with an existing booking"
+                ]
+            })
+
+        } else if (start.getTime() < booking.endDate.getTime() && booking.startDate.getTime() <= new Date().getTime()) {
+
+            return res.status(403).json({
+                message: "Past bookings can't be modified",
+                statusCode: 403
+            })
+        } else {
+            booking.startDate = startDate;
+            booking.endDate = endDate;
+            booking.spotId = booking.spotId;
+            booking.userId = req.user.id;
+            await booking.save();
+            return res.json(booking)
+        }
+    }
+)
 
 module.exports = router;
