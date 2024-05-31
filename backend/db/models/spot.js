@@ -4,11 +4,6 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
 
     static async createSpot({ ownerId, address, city, state, country, lat, lng, name, description, price, previewImage }) {
       const spot = await Spot.create({
@@ -32,14 +27,14 @@ module.exports = (sequelize, DataTypes) => {
       Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner', onDelete: "CASCADE" })
       Spot.hasMany(models.Booking, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
       Spot.hasMany(models.Review, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
-      // Spot.hasMany(models.spotImage, {
-      //   foreignKey: 'imageId',
-      //   onDelete: "CASCADE", hooks: true,
-      //   constraints: false,
-      //   scope: {
-      //     imageType: 'Spot'
-      //   }
-      // })
+      Spot.hasMany(models.SpotImage, {
+        foreignKey: 'imageId',
+        onDelete: "CASCADE", hooks: true,
+        constraints: false,
+        scope: {
+          imageType: 'Spot'
+        }
+      })
     }
   }
   Spot.init({
