@@ -1,9 +1,9 @@
 'use strict';
 let options = {};
-options.tableName = "Spot Images";
+options.tableName = "SpotImages";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('spotImages', {
+    await queryInterface.createTable('SpotImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -30,6 +30,6 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('spotImages');
+    await queryInterface.dropTable('SpotImages');
   }
 };

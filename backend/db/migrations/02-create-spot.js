@@ -20,7 +20,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: "Users",
-          // key: "id"
+          key: "id"
         },
         onDelete: "CASCADE"
       },
@@ -65,7 +65,8 @@ module.exports = {
         allowNull: false
       },
       previewImage: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

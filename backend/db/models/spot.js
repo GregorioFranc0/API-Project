@@ -9,6 +9,24 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+
+    static async createSpot({ ownerId, address, city, state, country, lat, lng, name, description, price, previewImage }) {
+      const spot = await Spot.create({
+        ownerId,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price,
+        previewImage
+      });
+      return await Spot.scope('currentSpot').findByPk(spot.id)
+    }
+
     static associate(models) {
       // define association here
       Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner', onDelete: "CASCADE" })

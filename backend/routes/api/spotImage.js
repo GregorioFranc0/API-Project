@@ -1,6 +1,6 @@
 const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth')
-const { Spot, User, Image, Review, Booking, sequelize } = require('../../db/models');
+const { Spot, User, SpotImage, Review, ReviewImage, Booking, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const e = require('express');
@@ -13,10 +13,10 @@ router.delete(
     '/:spotImageId',
     requireAuth,
     async (req, res) => {
-        const image = await Image.findOne({
+        const image = await SpotImage.findOne({
             where: {
                 imageId: req.params.spotImageId,
-                imageType: "Spot"
+
             },
             include: {
                 model: Spot, where: { id: req.params.spotImageId }

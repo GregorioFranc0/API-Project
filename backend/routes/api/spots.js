@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Spot, SpotImage } = require('../../db/models');
+const { User, Spot, SpotImage, Review, ReviewImage, Booking, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
@@ -102,14 +102,14 @@ router.get(
             offset: size * (page - 1)
         })
 
-        for await (let spot of spots) {
+        for (let spot of spots) {
             const previewImage = await SpotImage.findOne({
                 where: {
-                    imageId: spot.id,
-                    preview: true,
-                    imageType: "Spot"
+                    spotId: spot.id,
+                    preview: true
                 }
             });
+            console.log("preview image: " + previewImage);
             if (previewImage && !spot.previewImage) {
                 spot.previewImage = previewImage.url
             } else if (!previewImage && !spot.previewImage) {
@@ -288,7 +288,7 @@ router.post(
             })
         }
         const { url, preview, } = req.body;
-        const image = await Image.create({
+        const image = await SpotImage.create({
             url, preview,
             imageId: req.params.spotId,
             imageType: "Spot"
@@ -314,7 +314,7 @@ router.get(
                 model: User,
                 attributes: { exclude: ['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt'] }
             }, {
-                model: Image, as: "ReviewImages",
+                model: ReviewImage, as: "ReviewImages",
                 attributes: { exclude: ['imageType', 'imageId', 'preview', 'createdAt', 'updatedAt'] }
             }]
         });
@@ -473,11 +473,11 @@ router.get(
         });
 
         if (spot) {
-            const previewImage = await Image.findOne({
+            const previewImage = await SpotImage.findOne({
                 where: {
                     imageId: req.params.spotId,
                     preview: true,
-                    imageType: "Spot"
+
                 }
             });
 
