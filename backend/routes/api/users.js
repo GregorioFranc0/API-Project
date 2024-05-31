@@ -60,7 +60,7 @@ router.post(
                 errors: err.message
             })
         }
-        const user = await User.signup({
+        const user = await new User({
             firstName, lastName, email, username, password
         });
 

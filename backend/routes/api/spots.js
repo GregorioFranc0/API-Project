@@ -98,16 +98,16 @@ router.get(
         }
 
         const spots = await Spot.findAll({
-            limit: size,
-            offset: size * (page - 1)
+            // limit: size,
+            // offset: size * (page - 1)
         })
 
         for (let spot of spots) {
             const previewImage = await SpotImage.findOne({
-                where: {
-                    spotId: spot.id,
-                    preview: true
-                }
+                // where: {
+                //     spotId: spot.id,
+                //     preview: true
+                // }
             });
             console.log("preview image: " + previewImage);
             if (previewImage && !spot.previewImage) {
@@ -157,7 +157,7 @@ router.get(
         for await (let spot of spots) {
             const previewImage = await SpotImage.findOne({
                 where: {
-                    imageId: spot.id,
+                    spotId: spot.id,
                     preview: true,
                     imageType: "Spot"
                 }
@@ -475,7 +475,7 @@ router.get(
         if (spot) {
             const previewImage = await SpotImage.findOne({
                 where: {
-                    imageId: req.params.spotId,
+                    spotId: req.params.spotId,
                     preview: true,
 
                 }
@@ -485,8 +485,8 @@ router.get(
             spot.dataValues.SpotImages = []
             const allImages = await Image.findAll({
                 where: {
-                    imageId: req.params.spotId,
-                    imageType: "Spot"
+                    spotId: req.params.spotId,
+
                 }
             })
             spot.dataValues.SpotImages = [...allImages]
