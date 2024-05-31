@@ -19,9 +19,9 @@ router.delete(
             })
         } else {
             await image.destroy();
-            return res.status(200).json({
+            return res.status(201).json({
                 message: "Deleted image successfully",
-                statusCode: 200
+                statusCode: 201
             })
         }
     }

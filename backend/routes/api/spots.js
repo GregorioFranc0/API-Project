@@ -270,7 +270,7 @@ router.delete(
         }
 
         await spot.destroy();
-        return res.status(200).json(spot)
+        return res.status(201).json(spot)
     }
 
 )
@@ -391,7 +391,7 @@ router.get(
                     attributes: { exclude: ['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt'] }
                 },
             })
-            return res.status(200).json({ Bookings: bookings })
+            return res.status(201).json({ Bookings: bookings })
         } else {
             const bookings = await Booking.findAll({
                 where: {
@@ -401,7 +401,7 @@ router.get(
                     exclude: ['id', 'userId', 'createdAt', 'updatedAt']
                 }
             })
-            return res.status(200).json({ Bookings: bookings })
+            return res.status(201).json({ Bookings: bookings })
         }
     }
 )

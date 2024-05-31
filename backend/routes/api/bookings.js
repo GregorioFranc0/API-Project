@@ -52,9 +52,9 @@ router.delete(
             })
         } else {
             await booking.destroy();
-            return res.status(200).json({
+            return res.status(201).json({
                 message: 'Booking Successfully Deleted',
-                statusCode: 200
+                statusCode: 201
             })
         }
     }
