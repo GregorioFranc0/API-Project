@@ -17,6 +17,7 @@ module.exports = {
       {
         id: 1,
         ownerId: 1,
+
         address: '123 Disney Lane',
         city: 'San Francisco',
         state: 'California',
@@ -32,6 +33,7 @@ module.exports = {
       {
         id: 2,
         ownerId: 2,
+
         address: '456 Tranquility Lane',
         city: 'Washington DC',
         state: 'Washington DC',
@@ -47,6 +49,7 @@ module.exports = {
       {
         id: 3,
         ownerId: 3,
+
         address: '265 Andale Lane',
         city: 'Andale',
         state: 'Virginia',
