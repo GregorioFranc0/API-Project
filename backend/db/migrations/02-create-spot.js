@@ -57,17 +57,17 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false
       },
-      avgRating: {
-        type: Sequelize.FLOAT,
-      },
+      // avgRating: {
+      //   type: Sequelize.FLOAT,
+      // },
       price: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      previewImage: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
+      // previewImage: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

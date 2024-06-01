@@ -26,8 +26,8 @@ module.exports = {
         name: 'AA',
         description: 'Place where web developers are',
         price: 123,
-        avgRating: 4.5,
-        previewImage: 'https://miro.medium.com/v2/resize:fit:1200/1*E_VqdthX1vuTH2Usax9i2g.jpeg'
+        // avgRating: 4.5,
+        // previewImage: 'https://miro.medium.com/v2/resize:fit:1200/1*E_VqdthX1vuTH2Usax9i2g.jpeg'
       },
       {
         id: 2,
@@ -41,8 +41,8 @@ module.exports = {
         name: 'Tranquility Lane',
         description: 'Place where dreams come true',
         price: 280,
-        avgRating: 5,
-        previewImage: 'https://images.fallout.wiki/f/f8/TL_aerial_view.jpg'
+        // avgRating: 5,
+        // previewImage: 'https://images.fallout.wiki/f/f8/TL_aerial_view.jpg'
       },
       {
         id: 3,
@@ -56,8 +56,8 @@ module.exports = {
         name: 'Wilks House',
         description: 'Place where comfort rules',
         price: 199,
-        avgRating: 4,
-        previewImage: 'https://static.wikia.nocookie.net/fallout/images/b/b9/Andale.jpg/revision/latest?cb=20120813221138'
+        // avgRating: 4,
+        // previewImage: 'https://static.wikia.nocookie.net/fallout/images/b/b9/Andale.jpg/revision/latest?cb=20120813221138'
       },
       // {
       //   id: 4,

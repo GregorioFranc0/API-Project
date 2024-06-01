@@ -38,12 +38,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Spot.init({
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: true,
-      primaryKey: true
-    },
+    // id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   unique: true,
+    //   primaryKey: true
+    // },
     ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -87,15 +87,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    avgRating: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
+    // avgRating: {
+    //   type: DataTypes.FLOAT,
+    //   allowNull: false,
 
-    },
-    previewImage: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
+    // },
+    // previewImage: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false
+    // }
   }, {
     sequelize,
     modelName: 'Spot',
