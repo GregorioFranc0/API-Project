@@ -40,6 +40,9 @@ router.post(
             password,
             username
         } = req.body;
+
+        const hashedPassword = bcrypt.hashSync(password);
+
         const userName = await User.findOne({ where: { username: username } })
         if (userName) {
             const err = new Error('User with that username already exists')
@@ -60,8 +63,8 @@ router.post(
                 errors: err.message
             })
         }
-        const user = await new User({
-            firstName, lastName, email, username, password
+        const user = await User.create({
+            firstName, lastName, email, username, hashedPassword
         });
 
         await setTokenCookie(res, user);
