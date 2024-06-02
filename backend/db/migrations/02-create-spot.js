@@ -65,10 +65,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      previewImage: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
+      // previewImage: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
