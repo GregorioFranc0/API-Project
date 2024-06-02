@@ -6,6 +6,8 @@ const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth')
 const { User, Spot, SpotImage, Review, ReviewImage, Booking, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { spotImageValidator } = require('../../middleware/spotImageValidator');
+const { CustomError } = require('../../utils/errors');
 const router = express.Router();
 
 const validateCreateBooking = [
@@ -275,30 +277,50 @@ router.delete(
 )
 
 // Add a image to a spot by spotId
-router.post(
-    '/:id/images',
-    async (req, res) => {
-        const spot = await Spot.findByPk(req.params.id);
-        if (!spot) {
-            res.status(404);
-            return res.json({
-                message: "Spot could not be found",
-                stateCode: 404
-            })
-        }
-        const { url, preview, } = req.body;
-        const image = await SpotImage.create({
-            url, preview,
-            SpotImage: req.params.id,
+router.post('/:id/images', requireAuth, spotImageValidator, async (req, res, next) => {
 
+    try {
+        //ORGANIZE
+        const spotId = req.params.id;
+        const { url, preview } = req.body;
+        const userId = req.user.id;
+        //EDGE CASE
+
+        const spot = await Spot.findByPk(spotId);
+        console.log(spot.ownerId);
+        if (!spot) {
+            new CustomError('Spot could not be found', 404).throwErr()
+            // res.status(404);
+            // const err = new Error("Spot could not be found");
+            // err.status = 404;
+            // throw err;
+            // return res.json({
+            //     message: "Spot could not be found",
+            //     status: 404
+            // })
+        }
+        if (spot.ownerId !== userId) {
+            new CustomError('Forbidden', 403).throwErr()
+        }
+        //ACTION - CREATING AN IMAGE
+        const image = await SpotImage.create({
+            spotId: spotId,
+            url: url,
+            preview: preview
         })
+        console.log(image);
         const resObject = {
             id: image.id,
             url: image.url,
             preview: image.preview
         }
-        return res.status(201).json(resObject)
+        return res.status(201).json(resObject);
+    } catch (err) {
+        next(err)
     }
+
+
+}
 )
 
 // Get all reviews by a spotId
@@ -482,7 +504,7 @@ router.get(
 
 
             spot.dataValues.SpotImages = []
-            const allImages = await Image.findAll({
+            const allImages = await SpotImage.findAll({
                 where: {
                     id: req.params.id,
 

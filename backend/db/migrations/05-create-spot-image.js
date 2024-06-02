@@ -14,10 +14,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      imageId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
+      // imageId: {
+      //   type: Sequelize.INTEGER,
+      //   allowNull: false
+      // },
       url: {
         type: Sequelize.STRING
       },

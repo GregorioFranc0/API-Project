@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   SpotImage.init({
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      unique: true
-    },
+    // id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   primaryKey: true,
+    //   unique: true
+    // },
     spotId: {
       type: DataTypes.INTEGER,
       allowNull: false,
