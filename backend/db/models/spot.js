@@ -5,8 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
 
-    static async createSpot({ ownerId, address, city, state, country, lat, lng, name, description, price, previewImage }) {
+    static async createSpot({ id, ownerId, address, city, state, country, lat, lng, name, description, price, previewImage }) {
       const spot = await Spot.create({
+        id,
         ownerId,
         address,
         city,
@@ -38,12 +39,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Spot.init({
-    // id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   unique: true,
-    //   primaryKey: true
-    // },
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: true,
+      primaryKey: true
+    },
     ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
