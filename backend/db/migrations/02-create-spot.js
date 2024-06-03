@@ -9,10 +9,11 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Spots', {
       id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+
       },
 
       ownerId: {
@@ -20,7 +21,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: "Users",
-          // key: "id"
+          key: "id"
         },
         onDelete: "CASCADE"
       },
@@ -57,16 +58,17 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false
       },
-      avgRating: {
-        type: Sequelize.FLOAT,
-      },
+      // avgRating: {
+      //   type: Sequelize.FLOAT,
+      // },
       price: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      previewImage: {
-        type: Sequelize.STRING
-      },
+      // previewImage: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

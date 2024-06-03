@@ -1,17 +1,22 @@
 'use strict';
 let options = {};
-options.tableName = "Spot Images";
+options.tableName = "SpotImages";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('spotImages', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
+    await queryInterface.createTable('SpotImages', {
+      // id: {
+      //   allowNull: false,
+      //   autoIncrement: true,
+      //   primaryKey: true,
+      //   type: Sequelize.INTEGER
+      // },
       spotId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      imageId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       url: {
         type: Sequelize.STRING
@@ -30,6 +35,6 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('spotImages');
+    await queryInterface.dropTable('SpotImages');
   }
 };

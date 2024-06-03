@@ -1,6 +1,6 @@
 'use strict';
 let options = {};
-options.tableName = "Review Images";
+options.tableName = "ReviewImages";
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
@@ -20,7 +20,11 @@ module.exports = {
         references: {
           model: "Reviews",
           key: "id"
-        }
+        },
+        imageId: {
+          type: Sequelize.INTEGER,
+          allowNull: false
+        },
       },
       url: {
         type: Sequelize.STRING

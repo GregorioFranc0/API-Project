@@ -43,14 +43,14 @@ router.get(
                 model: Spot,
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             }, {
-                model: Image, as: "ReviewImages",
-                attributes: { exclude: ['imageType', 'imageId', 'preview', 'createdAt', 'updatedAt'] }
+                model: ReviewImage, as: "ReviewImages",
+                attributes: { exclude: ['imageId', 'preview', 'createdAt', 'updatedAt'] }
             }]
         })
         if (!reviews.length) {
             res.status(404);
             return res.json({
-                message: "Couldn't found reviews",
+                message: "Couldn't find reviews",
                 statusCode: 404
             })
         }
@@ -143,7 +143,7 @@ router.delete(
             })
         }
         await review.destroy();
-        return res.status(200).json(review)
+        return res.status(201).json(review)
     }
 )
 

@@ -4,24 +4,38 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
+    static async createSpot({ id, ownerId, address, city, state, country, lat, lng, name, description, price, previewImage }) {
+      const spot = await Spot.create({
+        id,
+        ownerId,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price,
+        previewImage
+      });
+      return await Spot.scope('currentSpot').findByPk(spot.id)
+    }
+
     static associate(models) {
       // define association here
       Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner', onDelete: "CASCADE" })
       Spot.hasMany(models.Booking, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
       Spot.hasMany(models.Review, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
-      // Spot.hasMany(models.spotImage, {
-      //   foreignKey: 'imageId',
-      //   onDelete: "CASCADE", hooks: true,
-      //   constraints: false,
-      //   scope: {
-      //     imageType: 'Spot'
-      //   }
-      // })
+      Spot.hasMany(models.SpotImage, {
+        foreignKey: 'imageId',
+        onDelete: "CASCADE", hooks: true,
+        constraints: false,
+        scope: {
+          imageType: 'Spot'
+        }
+      })
     }
   }
   Spot.init({
@@ -36,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
+
     address: {
       type: DataTypes.STRING,
       allowNull: false
@@ -74,15 +89,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    avgRating: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
+    // avgRating: {
+    //   type: DataTypes.FLOAT,
+    //   allowNull: false,
 
-    },
-    previewImage: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
+    // },
+    // previewImage: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false
+    // }
   }, {
     sequelize,
     modelName: 'Spot',

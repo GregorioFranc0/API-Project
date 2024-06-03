@@ -1,12 +1,14 @@
 const express = require('express');
+
 require('express-async-errors');
 const morgan = require('morgan');
 const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
-
+const { ValidationError } = require('sequelize');
 const { environment } = require('./config');
+const routes = require('./routes');
 const isProduction = environment === 'production';
 const app = express()
 
@@ -39,7 +41,7 @@ app.use(
 );
 
 
-const routes = require('./routes');
+
 
 // ...
 
@@ -53,7 +55,7 @@ app.use((_req, _res, next) => {
     next(err);
 });
 
-const { ValidationError } = require('sequelize');
+
 
 // ...
 
@@ -79,7 +81,7 @@ app.use((err, _req, res, _next) => {
         title: err.title || 'Server Error',
         message: err.message,
         errors: err.errors,
-        stack: isProduction ? null : err.stack
+        // stack: isProduction ? null : err.stack
     });
 });
 
