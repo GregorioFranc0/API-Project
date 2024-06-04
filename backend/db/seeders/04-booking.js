@@ -1,6 +1,7 @@
 'use strict';
 
 let options = {};
+options.tableName = "Bookings";
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
@@ -15,7 +16,6 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    options.tableName = "Bookings"
     await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
