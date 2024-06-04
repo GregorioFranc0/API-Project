@@ -1,11 +1,50 @@
 'use strict';
 
 const { Model, Validator, Sequelize } = require('sequelize');
+const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
+
+    validatePassword(password) {
+      return bcrypt.compareSync(password, hashedPassword.toString());
+    };
+
+    static getCurrentUserById(id) {
+      return User.scope("currentUser").findByPk(id);
+    }
+    static async login({ credential, password }) {
+      const { Op } = require('sequelize');
+      const user = await User.scope('loginUser').findOne({
+        where: {
+          [Op.or]: {
+            username: credential,
+            email: credential
+          }
+        }
+      });
+      if (user && user.validatePassword(password)) {
+        return await User.scope('currentUser').findByPk(user.id);
+      }
+    }
+
+    static async signup({ firstName, lastName, username, email, password }) {
+      const hashedPassword = bcrypt.hashSync(password);
+      const user = await User.create({
+        firstName,
+        lastName,
+        username,
+        email,
+        hashedPassword
+      });
+      return await User('currentUser').findByPk(user.id);
+    }
+
     static associate(models) {
       // define association here
+      User.hasMany(models.Booking, { foreignKey: 'userId' })
+      User.hasMany(models.Review, { foreignKey: 'userId' })
+      User.hasMany(models.Spot, { foreignKey: 'ownerId' })
     }
   };
 
@@ -37,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          len: [3, 256],
+          len: [6, 256],
           isEmail: true
         }
       },
