@@ -208,6 +208,7 @@ router.post(
         const ownerId = req.user.id
 
         const {
+            id,
             address,
             city,
             state,
@@ -220,6 +221,7 @@ router.post(
             previewImage
         } = req.body;
         const spot = await Spot.createSpot({
+            id,
             ownerId, address, city, state, country, lat, lng, name, description, price, previewImage
         });
 
