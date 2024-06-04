@@ -1,6 +1,7 @@
 'use strict';
 
 let options = {};
+options.tableName = "Reviews";
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
@@ -15,7 +16,6 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    options.tableName = "Reviews"
     await queryInterface.bulkInsert(options, [
       {
         review: '10/10, would stay again',

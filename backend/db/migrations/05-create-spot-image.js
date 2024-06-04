@@ -1,6 +1,9 @@
 'use strict';
 let options = {};
 options.tableName = "SpotImages";
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;
+}
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('SpotImages', {
@@ -35,6 +38,6 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('SpotImages');
+    await queryInterface.dropTable('SpotImages', options);
   }
 };
