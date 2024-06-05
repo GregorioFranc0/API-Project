@@ -145,6 +145,7 @@ router.get(
 )
 
 // Get all spots owned by current user
+//make sure you are logging in users from the seeder files
 router.get(
     '/current',
     requireAuth,
@@ -200,6 +201,7 @@ router.get(
 )
 
 // Create a spot
+//make sure to pass in proper json object in the body
 router.post(
     '/',
     requireAuth, validateCreateSpot,
@@ -208,7 +210,6 @@ router.post(
         const ownerId = req.user.id
 
         const {
-            id,
             address,
             city,
             state,
@@ -221,7 +222,6 @@ router.post(
             previewImage
         } = req.body;
         const spot = await Spot.createSpot({
-            id,
             ownerId, address, city, state, country, lat, lng, name, description, price, previewImage
         });
 
@@ -230,11 +230,12 @@ router.post(
 )
 
 // Edit a spot
+//pass in json object in body
 router.put(
     '/:id',
     async (req, res) => {
         const { address, city, state, country, lat, lng, name, description, price, previewImage } = req.body;
-        const spot = await Spot.scope("currentSpot").findByPk(req.params.id);
+        const spot = await new Spot("currentSpot").findByPk(req.params.id);
         if (!spot) res.status(404).json({ message: "Spot could not be found" });
         spot.id = id;
         spot.address = address;
@@ -254,6 +255,7 @@ router.put(
 )
 
 // Delete a spot by spotId
+//pass in spot id to delete
 router.delete(
     '/:id',
     requireAuth,

@@ -13,7 +13,10 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-
+        // references: {
+        //   model: "Spots",
+        //   key: "id"
+        // },
       },
 
       ownerId: {
