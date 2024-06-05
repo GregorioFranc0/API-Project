@@ -5,9 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
 
-    static async createSpot({ id, ownerId, address, city, state, country, lat, lng, name, description, price, previewImage }) {
+    static async createSpot({ ownerId, address, city, state, country, lat, lng, name, description, price, previewImage }) {
       const spot = await Spot.create({
-        id,
+        // id,
         ownerId,
         address,
         city,
@@ -20,12 +20,12 @@ module.exports = (sequelize, DataTypes) => {
         price,
         previewImage
       });
-      return await Spot.scope('currentSpot').findByPk(spot.id)
+      return await Spot('currentSpot').findByPk(spot.id)
     }
 
     static associate(models) {
       // define association here
-      Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner', onDelete: "CASCADE" })
+      Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner', onDelete: "CASCADE", hooks: true })
       Spot.hasMany(models.Booking, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
       Spot.hasMany(models.Review, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
       Spot.hasMany(models.SpotImage, {
@@ -101,11 +101,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Spot',
-    scopes: {
-      currentSpot: {
-        attributes: { exclude: ['avgRating', 'previewImage'] }
-      },
-    }
+    // scopes: {
+    //   currentSpot: {
+    //     attributes: { exclude: ['avgRating', 'previewImage'] }
+    //   },
+    // }
   });
   return Spot;
 };

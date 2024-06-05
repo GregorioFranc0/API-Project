@@ -67,7 +67,7 @@ const validateCreateSpot = [
 ]
 
 //get all spots
-
+//FIXED: keep id in create-spot.js migration, do not pass in id on spot model
 router.get(
     '/',
     async (req, res) => {
@@ -106,10 +106,10 @@ router.get(
 
         for (let spot of spots) {
             const previewImage = await SpotImage.findOne({
-                where: {
-                    spotId: spot.id,
-                    preview: true
-                }
+                // where: {
+                //     spotId: spot.id,
+                //     preview: true
+                // }
             });
             console.log("preview image: " + previewImage);
             if (previewImage && !spot.previewImage) {
@@ -121,7 +121,7 @@ router.get(
             }
 
             const rating = await Review.findAll({
-                where: { id: spot.id }
+                // where: { id: spot.id }
             })
 
             let sum = 0;
