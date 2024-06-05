@@ -106,10 +106,10 @@ router.get(
 
         for (let spot of spots) {
             const previewImage = await SpotImage.findOne({
-                // where: {
-                //     spotId: spot.id,
-                //     preview: true
-                // }
+                where: {
+                    spotId: spot.id,
+                    preview: true
+                }
             });
             console.log("preview image: " + previewImage);
             if (previewImage && !spot.previewImage) {
