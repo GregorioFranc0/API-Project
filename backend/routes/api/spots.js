@@ -207,7 +207,7 @@ router.post(
     requireAuth, validateCreateSpot,
     async (req, res) => {
         console.log("CONSOLE LOG " + req.user)
-        const ownerId = req.user.id
+        const { ownerId } = req.user.id
 
         const {
             address,
