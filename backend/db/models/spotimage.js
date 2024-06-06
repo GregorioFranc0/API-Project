@@ -25,7 +25,11 @@ module.exports = (sequelize, DataTypes) => {
     spotId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true
+      unique: true,
+      references: {
+        model: "Spots",
+        key: "id"
+      }
     },
     url: {
       type: DataTypes.STRING,

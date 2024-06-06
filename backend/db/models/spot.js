@@ -29,26 +29,24 @@ module.exports = (sequelize, DataTypes) => {
       Spot.hasMany(models.Booking, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
       Spot.hasMany(models.Review, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
       Spot.hasMany(models.SpotImage, {
-        foreignKey: 'imageId',
+        foreignKey: 'imageId', as: "ReviewImages",
         onDelete: "CASCADE", hooks: true,
         constraints: false,
-        scope: {
-          imageType: 'Spot'
-        }
+
       })
     }
   }
   Spot.init({
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: true,
-      primaryKey: true
-    },
+    // id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   unique: true,
+    //   primaryKey: true
+    // },
     ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true
+      // unique: true
     },
 
     address: {
@@ -94,10 +92,10 @@ module.exports = (sequelize, DataTypes) => {
     //   allowNull: false,
 
     // },
-    // previewImage: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false
-    // }
+    previewImage: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Spot',
