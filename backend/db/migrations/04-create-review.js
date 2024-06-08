@@ -41,10 +41,7 @@ module.exports = {
           model: "Reviews",
           key: "id"
         },
-        imageId: {
-          type: Sequelize.INTEGER,
-          allowNull: false
-        },
+
       },
       stars: {
         type: Sequelize.INTEGER
