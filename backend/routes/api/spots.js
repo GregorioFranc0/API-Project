@@ -166,10 +166,10 @@ router.post(
             name,
             description,
             price,
-            previewImage
+            // previewImage
         } = req.body;
         const spot = await Spot.create({
-            ownerId, address, city, state, country, lat, lng, name, description, price, previewImage
+            ownerId, address, city, state, country, lat, lng, name, description, price
         });
 
         return res.status(201).json(spot)
@@ -236,7 +236,7 @@ router.get(
 //pass in json object in body
 router.put(
     '/:id',
-    async (req, res, next) => {
+    async (req, res) => {
         const { address, city, state, country, lat, lng, name, description, price, previewImage } = req.body;
         const spot = await new Spot('currentSpot').findByPk(req.params.spotId);
         if (!spot) res.status(404).json({ message: "Spot could not be found" });
@@ -332,7 +332,7 @@ router.delete(
 router.post(
     '/:spotId/images',
     async (req, res) => {
-        const spot = await Spot.findByPk(req.params.spotId);
+        const spot = await Spot.findByPk(req.params.id);
         if (!spot) {
             res.status(404);
             return res.json({
@@ -341,9 +341,10 @@ router.post(
             })
         }
         const { url, preview, } = req.body;
-        const image = await new SpotImage({
-            url, preview,
-            imageId: req.params.spotId
+        const image = await SpotImage.create({
+            imageId: req.params.imageId,
+            url,
+            preview
         })
         const resObject = {
             id: image.id,

@@ -70,8 +70,8 @@ router.post(
                 statusCode: 404
             })
         }
-        const allReviews = await Image.findAll({
-            where: { imageId: req.params.reviewId }
+        const allReviews = await ReviewImage.findAll({
+            where: { reviewId: req.params.reviewId }
         });
         if (allReviews.length >= 10) {
             res.status(403).json({
@@ -80,7 +80,7 @@ router.post(
             })
         }
         const { url } = req.body;
-        const image = await Image.create({
+        const image = await ReviewImage.create({
             url,
             imageId: req.params.reviewId,
             imageType: 'Review'
