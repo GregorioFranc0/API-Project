@@ -264,6 +264,7 @@ router.delete(
     requireAuth,
     async (req, res) => {
         const spot = await Spot.findByPk(req.params.id);
+        console.log("THIS IS THE SPOT---- ", spot)
         if (!spot) {
             res.status(404);
             return res.json({ message: 'Spot not found' })
