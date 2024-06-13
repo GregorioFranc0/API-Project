@@ -5,9 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
 
-    static async createSpot({ id, ownerId, address, city, state, country, lat, lng, name, description, price, previewImage }) {
+    static async createSpot({ ownerId, address, city, state, country, lat, lng, name, description, price, previewImage }) {
       const spot = await Spot.create({
-        id,
+        // id,
         ownerId,
         address,
         city,
@@ -20,35 +20,30 @@ module.exports = (sequelize, DataTypes) => {
         price,
         previewImage
       });
-      return await Spot.scope('currentSpot').findByPk(spot.id)
+      return await Spot('currentSpot').findByPk(spot.id)
     }
 
     static associate(models) {
       // define association here
-      Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner', onDelete: "CASCADE" })
+      // Spot.belongsTo(models.Spot, { foreignKey: "id", as: "id", onDelete: "CASCADE", hooks: true })
+
+      Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner' })
       Spot.hasMany(models.Booking, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
-      Spot.hasMany(models.Review, { foreignKey: 'spotId', onDelete: "CASCADE", hooks: true })
+      Spot.hasMany(models.Review, { foreignKey: 'reviewId', onDelete: "CASCADE", hooks: true })
       Spot.hasMany(models.SpotImage, {
-        foreignKey: 'imageId',
+        foreignKey: 'id', as: "SpotImages",
         onDelete: "CASCADE", hooks: true,
         constraints: false,
-        scope: {
-          imageType: 'Spot'
-        }
+
       })
     }
   }
   Spot.init({
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: true,
-      primaryKey: true
-    },
+
     ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true
+      // unique: true
     },
 
     address: {
@@ -101,11 +96,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Spot',
-    scopes: {
-      currentSpot: {
-        attributes: { exclude: ['avgRating', 'previewImage'] }
-      },
-    }
+    // scopes: {
+    //   currentSpot: {
+    //     attributes: { exclude: ['avgRating', 'previewImage'] }
+    //   },
+    // }
   });
   return Spot;
 };

@@ -20,6 +20,7 @@ module.exports = {
           model: "Users",
           key: "id"
         }
+
       },
       spotId: {
         type: Sequelize.INTEGER,
@@ -28,10 +29,19 @@ module.exports = {
           model: "Spots",
           key: 'id'
         },
-        onDelete: "CASCADE"
+        onDelete: "CASCADE",
+        hooks: true
       },
       review: {
         type: Sequelize.STRING
+      },
+      reviewId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Reviews",
+          key: "id"
+        },
+
       },
       stars: {
         type: Sequelize.INTEGER

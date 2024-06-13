@@ -1,5 +1,7 @@
 'use strict';
 
+const { User, Spot, Booking } = require('../models');
+const bcrypt = require("bcryptjs");
 let options = {};
 options.tableName = "Bookings";
 if (process.env.NODE_ENV === 'production') {

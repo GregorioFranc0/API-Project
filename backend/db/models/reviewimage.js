@@ -16,21 +16,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ReviewImage.init({
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true
-    },
+
     reviewId: DataTypes.INTEGER,
     url: DataTypes.STRING,
 
   }, {
     sequelize,
     modelName: 'ReviewImage',
-    defaultScope: {
-      attributes: {
-        exclude: ['createdAt', 'updatedAt']
-      }
-    }
+    // defaultScope: {
+    //   attributes: {
+    //     exclude: ['createdAt', 'updatedAt']
+    //   }
+    // }
   });
   return ReviewImage;
 };

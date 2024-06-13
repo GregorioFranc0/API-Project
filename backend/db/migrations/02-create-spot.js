@@ -13,7 +13,12 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-
+        references: {
+          model: "Spots",
+          key: "id"
+        },
+        onDelete: "CASCADE",
+        // hooks: true
       },
 
       ownerId: {
@@ -23,7 +28,8 @@ module.exports = {
           model: "Users",
           key: "id"
         },
-        onDelete: "CASCADE"
+        onDelete: "CASCADE",
+        // hooks: true
       },
 
       address: {
