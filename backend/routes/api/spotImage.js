@@ -15,7 +15,7 @@ router.delete(
     async (req, res) => {
         const image = await SpotImage.findOne({
             where: {
-                imageId: req.params.spotImageId,
+                id: req.params.spotImageId,
 
             },
             include: {
