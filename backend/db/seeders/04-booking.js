@@ -21,7 +21,7 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        userId: 2,
+        userId: 1,
         startDate: new Date("2022-11-10"),
         endDate: new Date('2022-11-12'),
       },

@@ -1,6 +1,6 @@
 const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth')
-const { Spot, User, Review, Image, Booking } = require('../../db/models')
+const { Spot, User, Review, SpotImage, ReviewImage, Booking } = require('../../db/models')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation')
 const router = express.Router()
@@ -11,7 +11,7 @@ router.get(
     '/current',
     requireAuth,
     async (req, res) => {
-        const { user } = req;
+        const user = req.user;
         const bookings = await Booking.findAll({
             where: {
                 userId: user.id
@@ -26,11 +26,11 @@ router.get(
         })
         if (!bookings.length) {
             res.status(404).json({
-                message: "Coudn't find bookings",
+                message: "Couldn't find bookings",
                 statusCode: 404
             })
         }
-        res.json({ Bookings: bookings })
+        res.json({ Booking: bookings })
     }
 )
 

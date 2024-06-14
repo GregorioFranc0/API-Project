@@ -93,6 +93,7 @@ router.get("/", async (req, res) => {
 // Delete a user
 router.delete(
     '/:id',
+    requireAuth,
     async (req, res) => {
         const user = await User.findByPk(req.params.id);
         if (!user) {
@@ -106,6 +107,7 @@ router.delete(
 //get the current user
 router.get(
     '/:id',
+    requireAuth,
     async (req, res) => {
         const user = await User.findByPk(req.params.id);
         if (!user) {
