@@ -527,26 +527,28 @@ router.post(
         }
 
         const bookings = await Booking.findAll({
-            // include: {
-            //     model: Spot,
-            //     where: {
-            //         id: req.params.spotId
-            //     }
-            // }
+            include: {
+                model: Spot,
+                where: {
+                    id: req.params.spotId
+                }
+            }
         })
 
         const checkDate = bookings.some(booking =>
-            start.getTime() <= booking.startDate.getTime() && booking.startDate.getTime() <= end.getTime() ||
-            booking.startDate.getTime() <= start.getTime() && end.getTime() <= booking.endDate.getTime() ||
-            start.getTime() <= booking.endDate.getTime() && booking.endDate.getTime() <= end.getTime() ||
-            start.getTime() <= booking.startDate.getTime() && booking.endDate.getTime() <= end.getTime()
+        (start <= booking.startDate && booking.startDate <= end ||
+            booking.startDate <= start && end <= booking.endDate ||
+            start <= booking.endDate && booking.endDate <= end ||
+            start <= booking.startDate && booking.endDate <= end)
         )
 
         if (!checkDate) {
             const booking = await Booking.create({
                 id: req.params.id,
                 userId: req.user.id,
-                startDate, endDate,
+                spotId: spot.id,
+                startDate,
+                endDate
             })
             return res.status(201).json(booking)
         } else {
