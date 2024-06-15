@@ -1,6 +1,6 @@
 const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth')
-const { Spot, User, Image, Review, Booking, sequelize } = require('../../db/models');
+const { Spot, User, ReviewImage, Review, Booking, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const e = require('express');
@@ -10,7 +10,7 @@ const router = express.Router();
 router.delete(
     '/:reviewImageId',
     async (req, res) => {
-        const image = await Image.findByPk(req.params.reviewImageId)
+        const image = await ReviewImage.findByPk(req.params.reviewImageId)
 
         if (!image) {
             return res.status(404).json({
