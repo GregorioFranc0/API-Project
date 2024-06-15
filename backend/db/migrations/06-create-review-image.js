@@ -19,6 +19,11 @@ module.exports = {
           model: "Reviews",
           key: "id"
         },
+        reviewImageId: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          autoIncrement: true
+        }
 
       },
       url: {

@@ -21,7 +21,7 @@ module.exports = {
         review: '10/10, would stay again',
         stars: 5,
         userId: 3,
-        spotId: 2,
+        spotId: 1,
       },
       {
         review: 'pretty good.',
@@ -39,7 +39,7 @@ module.exports = {
         review: "i've stayed at better places.",
         stars: 3.5,
         userId: 1,
-        spotId: 3,
+        spotId: 1,
       },
       {
         review: 'it was alright.',
@@ -51,7 +51,7 @@ module.exports = {
         review: 'meh.',
         stars: 2,
         userId: 1,
-        spotId: 2,
+        spotId: 1,
       }
     ], options)
 

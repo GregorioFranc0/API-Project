@@ -33,33 +33,6 @@ router.get(
         res.json({ Booking: bookings })
     }
 )
-
-// Delete a booking
-router.delete(
-    '/:bookingId',
-    requireAuth,
-    async (req, res) => {
-        const booking = await Booking.findByPk(req.params.bookingId);
-        if (!booking) {
-            return res.status(404).json({
-                message: "Booking could not be found",
-                statusCode: 404
-            })
-        } else if (booking.startDate.getTime() < new Date().getTime()) {
-            return res.status(403).json({
-                message: "Bookings that have been started can't be deleted",
-                statusCode: 403
-            })
-        } else {
-            await booking.destroy();
-            return res.status(201).json({
-                message: 'Booking Successfully Deleted',
-                statusCode: 201
-            })
-        }
-    }
-)
-
 //Edit a booking
 router.put(
     '/:bookingId',
@@ -81,10 +54,10 @@ router.put(
                 error: ["end date cannot be on or before start date"]
             })
 
-        } else if (start.getTime() <= booking.startDate.getTime() && booking.startDate.getTime() <= end.getTime() ||
-            booking.startDate.getTime() <= start.getTime() && end.getTime() <= booking.endDate.getTime() ||
-            start.getTime() <= booking.endDate.getTime() && booking.endDate.getTime() <= end.getTime() ||
-            start.getTime() <= booking.startDate.getTime() && booking.endDate.getTime() <= end.getTime()) {
+        } else if (start <= booking.startDate && booking.startDate <= end ||
+            booking.startDate <= start && end <= booking.endDate ||
+            start <= booking.endDate && booking.endDate <= end ||
+            start <= booking.startDate && booking.endDate <= end) {
 
             return res.status(403).json({
                 message: 'Sorry, this spot is already booked for the specified dates',
@@ -95,7 +68,7 @@ router.put(
                 ]
             })
 
-        } else if (start.getTime() < booking.endDate.getTime() && booking.startDate.getTime() <= new Date().getTime()) {
+        } else if (start < booking.endDate && booking.startDate <= new Date()) {
 
             return res.status(403).json({
                 message: "Past bookings can't be modified",
@@ -111,5 +84,33 @@ router.put(
         }
     }
 )
+
+// Delete a booking
+router.delete(
+    '/:bookingId',
+    requireAuth,
+    async (req, res) => {
+        const booking = await Booking.findByPk(req.params.bookingId);
+        if (!booking) {
+            return res.status(404).json({
+                message: "Booking could not be found",
+                statusCode: 404
+            })
+        } else if (booking.startDate < new Date()) {
+            return res.status(403).json({
+                message: "Bookings that have been started can't be deleted",
+                statusCode: 403
+            })
+        } else {
+            await booking.destroy();
+            return res.status(201).json({
+                message: 'Booking Successfully Deleted',
+                statusCode: 201
+            })
+        }
+    }
+)
+
+
 
 module.exports = router;
