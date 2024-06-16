@@ -1,5 +1,9 @@
 'use strict';
 
+
+const { User, Spot, Review } = require('../models');
+const bcrypt = require("bcryptjs");
+
 let options = {};
 options.tableName = "Reviews";
 if (process.env.NODE_ENV === 'production') {
