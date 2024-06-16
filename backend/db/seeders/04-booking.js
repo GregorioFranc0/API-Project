@@ -1,6 +1,6 @@
 'use strict';
 
-const { User, Spot, Booking } = require('../models');
+const { User, Spot, Booking, Sequelize } = require('../models');
 const bcrypt = require("bcryptjs");
 let options = {};
 options.tableName = "Bookings";
@@ -9,15 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
+
     await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
@@ -47,15 +39,8 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+
     options.tableName = "Bookings"
-    await queryInterface.bulkDelete(options, {
-      where: Booking.findAll()
-    })
+    await queryInterface.bulkDelete(options)
   }
 };

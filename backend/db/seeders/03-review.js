@@ -65,8 +65,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     options.tableName = "Reviews"
-    await queryInterface.bulkDelete(options, {
-      where: Review.findAll()
-    })
+    await queryInterface.bulkDelete(options)
   }
 };
