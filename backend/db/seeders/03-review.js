@@ -16,7 +16,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert(options, [
+    await queryInterface.bulkCreate(options, [
       {
         review: '10/10, would stay again',
         stars: 5,
