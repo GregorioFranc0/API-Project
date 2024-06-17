@@ -3,12 +3,14 @@
 const { User, Spot, Booking, Sequelize } = require('../models');
 const bcrypt = require("bcryptjs");
 let options = {};
-options.tableName = "Bookings";
+
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
+
 module.exports = {
   async up(queryInterface, Sequelize) {
+    options.tableName = "Bookings";
 
     await Booking.bulkCreate(options, [
       {

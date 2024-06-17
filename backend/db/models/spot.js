@@ -39,18 +39,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Spot.init({
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      references: {
-        model: "Spots",
-        key: "id"
-      },
-      onDelete: "CASCADE",
-      // hooks: true
-    },
+    // id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   autoIncrement: true,
+    //   primaryKey: true,
+    //   references: {
+    //     model: "Spots",
+    //     key: "id"
+    //   },
+    //   onDelete: "CASCADE",
+    //   // hooks: true
+    // },
     ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,

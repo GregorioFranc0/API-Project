@@ -1,9 +1,11 @@
 'use strict';
 let options = {};
-options.tableName = "ReviewImages";
+
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
+options.tableName = "ReviewImages";
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('ReviewImages', {
