@@ -1,10 +1,12 @@
 'use strict';
 let options = {};
-options.tableName = "Spots";
+
 const { sequelize } = require('../models');
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
+options.tableName = "Spots";
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Spots', {

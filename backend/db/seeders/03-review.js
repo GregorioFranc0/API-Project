@@ -5,13 +5,14 @@ const { User, Spot, Review } = require('../models');
 const bcrypt = require("bcryptjs");
 
 let options = {};
-options.tableName = "Reviews";
+
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-
+    options.tableName = "Reviews";
     await Review.bulkCreate(options, [
       {
         review: '10/10, would stay again',
