@@ -27,6 +27,27 @@ const validateSignup = [
     handleValidationErrors
 ];
 
+//get the current user
+router.get(
+    '/:id',
+    requireAuth,
+    async (req, res) => {
+        const user = await User.findByPk(req.params.id);
+        if (!user) {
+            res.status(403);
+            return res.json({ message: "Forbidden" })
+        }
+        res.json(user)
+    }
+)
+
+//get all users
+router.get("/", async (req, res) => {
+    const allUsers = await User.findAll();
+
+    return res.json(allUsers);
+});
+
 // Sign up a user
 
 router.post(
@@ -82,14 +103,6 @@ router.post(
     }
 );
 
-//get all users
-router.get("/", async (req, res) => {
-    const allUsers = await User.findAll();
-
-    return res.json(allUsers);
-});
-
-
 // Delete a user
 router.delete(
     '/:id',
@@ -102,20 +115,8 @@ router.delete(
         }
         await user.destroy();
         return res.status(201).json({ message: 'User successfully deleted' })
-    })
+    });
 
-//get the current user
-router.get(
-    '/:id',
-    requireAuth,
-    async (req, res) => {
-        const user = await User.findByPk(req.params.id);
-        if (!user) {
-            res.status(404);
-            return res.json({ message: "User couldn't be found" })
-        }
-        res.json(user)
-    }
-)
+
 
 module.exports = router;
