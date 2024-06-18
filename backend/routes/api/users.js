@@ -37,7 +37,8 @@ router.get(
             res.status(403);
             return res.json({ message: "Forbidden" })
         }
-        res.json(user)
+
+        return res.json(user)
     }
 )
 

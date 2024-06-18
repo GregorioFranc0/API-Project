@@ -30,7 +30,7 @@ router.get(
                 statusCode: 404
             })
         }
-        res.json({ Booking: bookings })
+        res.status(200).json({ Booking: bookings })
     }
 )
 //Edit a booking
@@ -80,7 +80,7 @@ router.put(
             booking.spotId = booking.spotId;
             booking.userId = req.user.id;
             await booking.save();
-            return res.json(booking)
+            return res.status(200).json(booking)
         }
     }
 )
@@ -103,9 +103,9 @@ router.delete(
             })
         } else {
             await booking.destroy();
-            return res.status(201).json({
+            return res.status(200).json({
                 message: 'Booking Successfully Deleted',
-                statusCode: 201
+                statusCode: 200
             })
         }
     }

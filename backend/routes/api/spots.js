@@ -139,7 +139,7 @@ router.get(
             }
         }
 
-        res.json({
+        res.status(200).json({
             Spots: spots, page, size
         })
     }
@@ -313,10 +313,10 @@ router.post(
         const spot = await Spot.findByPk(req.params.spotId);
         // console.log("#########", spot, req.params.spotId);
         if (!spot) {
-            res.status(404);
+            res.status(400);
             return res.json({
                 message: "Spot couldn't be found",
-                stateCode: 404
+                stateCode: 400
             })
         }
         const { url, preview, } = req.body;
@@ -357,7 +357,7 @@ router.put(
 
         // console.log("THIS IS THE SPOT", spot);
         await spot.save();
-        res.json(spot)
+        res.status(200).json(spot)
     }
 )
 
@@ -383,7 +383,7 @@ router.delete(
         }
 
         await spot.destroy();
-        return res.status(201).json(spot)
+        return res.status(200).json(spot)
     }
 
 )
@@ -413,7 +413,7 @@ router.get(
                 statusCode: 404
             })
         }
-        res.json({ Reviews: spotReview })
+        res.status(200).json({ Reviews: spotReview })
     }
 )
 
@@ -444,9 +444,9 @@ router.post(
         })
         if (userId) {
             const err = new Error('User has already posted a review.')
-            res.status(403).json({
+            res.status(500).json({
                 message: err.message,
-                statusCode: 403,
+                statusCode: 500,
             })
         }
 
@@ -501,7 +501,7 @@ router.get(
                     exclude: ['id', 'userId', 'createdAt', 'updatedAt']
                 }
             })
-            return res.status(201).json({ Bookings: bookings })
+            return res.status(200).json({ Bookings: bookings })
         }
     }
 )

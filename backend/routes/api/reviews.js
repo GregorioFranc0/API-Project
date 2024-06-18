@@ -55,7 +55,7 @@ router.get(
             })
         }
 
-        res.json({ Reviews: reviews })
+        res.status(200).json({ Reviews: reviews })
     }
 )
 
@@ -119,7 +119,7 @@ router.put(
         reviews.userId = req.user.id;
         reviews.spotId = reviews.spotId;
         await reviews.save()
-        res.json(reviews)
+        res.status(200).json(reviews)
     }
 )
 
@@ -143,7 +143,7 @@ router.delete(
             })
         }
         await review.destroy();
-        return res.status(201).json(review)
+        return res.status(200).json(review)
     }
 )
 
