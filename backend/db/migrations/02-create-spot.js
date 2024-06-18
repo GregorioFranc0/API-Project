@@ -1,7 +1,7 @@
 'use strict';
 let options = {};
 
-const { sequelize } = require('../models');
+const { Sequelize, Spot } = require('../models');
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
@@ -90,6 +90,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
+    options.tableName = "Spots";
     await queryInterface.dropTable('Spots', options);
   }
 };

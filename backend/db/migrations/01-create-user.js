@@ -2,15 +2,17 @@
 
 let options = {};
 
-const { sequelize } = require('../models');
+const { Sequelize, User } = require('../models');
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
 options.tableName = "Users";
 
 module.exports = {
+
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
+
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -52,6 +54,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
+    options.tableName = "Users";
     await queryInterface.dropTable('Users', options);
   }
 };
